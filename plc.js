@@ -14,8 +14,13 @@ router.post('/',async (req,res)=>{
     else if(_req=='writeD'){
         const dstart = req.body.start;
         const arr = req.body.arr;
-        await PLC.writeDs(dstart,arr);
-        res.json(arr);
+        try {
+            const ret = await PLC.writeDs(dstart,arr);
+            res.json(ret);    
+        } catch (error) {
+            res.json(error);
+        }
+        
     }
     // if(!sql){
     //   return res.status(400).send('No sql ');

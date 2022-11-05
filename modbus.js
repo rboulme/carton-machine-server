@@ -9,22 +9,22 @@ class PLC {
     constructor() {
         this.client = new ModbusRTU();
         this.client.connectTCP("192.168.1.5", { port: 502 });
-        // this.client.setTimeout(1);
-        
-        // setTimeout(duration: number): void;
         this.client.setID(1);
     }
      async readDs(d,cnt){
-        // console.log(this.client.isOpen);
          const res =  await this.client.readHoldingRegisters(d, cnt);
          return res.data;
             
     }
     writeDs(addr,arr){
-        // console.log(this.client.isOpen);
-        
-        this.client.writeRegisters(addr, arr);
-        // this.client.writeRegister(1,50).then(()=>console.log('hi'));
+        // console.log(this.client);
+        try {
+            this.client.writeRegisters(addr, arr);
+            return 'success';    
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
     }
   };
 
